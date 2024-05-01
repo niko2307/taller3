@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "959724161995",
+    "project_id": "taller3-fc9a3",
+    "storage_bucket": "taller3-fc9a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959724161995:android:af975babc5cbcdbc43844e",
+        "android_client_info": {
+          "package_name": "com.example.taller3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhOEn-fQOVX1eNV3Nbxb_FeKnyOsG4h9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

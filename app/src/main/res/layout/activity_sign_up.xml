@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_light_blue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".SignUpActivity">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profilePicImg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/gray_frame"
+            android:padding="8dp"
+            app:shapeAppearanceOverlay="@style/circle_style"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/user" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/profilePicBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-8dp"
+            android:layout_marginBottom="-8dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/profilePicImg"
+            app:layout_constraintEnd_toEndOf="@+id/profilePicImg"
+            app:srcCompat="@drawable/camera_logo"
+            android:focusable="true"
+            android:contentDescription="@string/agregar_foto_de_perfil"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/black_bg"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profilePicImg">
+
+            <TextView
+                android:id="@+id/availableUsersLbl"
+                android:layout_width="44dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/emailq"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <EditText
+                android:id="@+id/editTextEmailAddress"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/gray_box"
+                android:ems="10"
+                android:hint="@string/ingrese_su_email"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/nameLbl"
+                android:layout_width="62dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/nombre"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:autofillHints="name"
+                android:background="@drawable/gray_box"
+                android:ems="10"
+                android:hint="@string/ingrese_su_nombre"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/lastNameLbl"
+                android:layout_width="62dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/apellido"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:autofillHints="name"
+                android:background="@drawable/gray_box"
+                android:ems="10"
+                android:hint="@string/ingrese_su_apellido"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/passwordLbl"
+                android:layout_width="86dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/contrase_aq"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:autofillHints="password"
+                android:background="@drawable/gray_box"
+                android:ems="10"
+                android:hint="@string/ingrese_su_contrase_a"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/idLbl"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/numero_de_cedula"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5" />
+
+            <EditText
+                android:id="@+id/editTextId"
+                android:layout_width="330dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:autofillHints="name"
+                android:background="@drawable/gray_box"
+                android:ems="10"
+                android:hint="@string/ingrese_su_cedula"
+                android:inputType="number"
+                android:padding="8dp"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/signUpBtn"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/sign_up" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
