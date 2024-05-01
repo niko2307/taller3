@@ -37,22 +37,23 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var myRef: DatabaseReference
     private lateinit var changeService: AvailableChangeService
 
-    override fun onRequestPermissionsResult(
+    override fun onRequestPermissionsResult
+                (
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
+        when (requestCode)
+        {
             0 -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                {
                     this.onMapReady(mMap!!)
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Permiso Negado, para utilizar la aplicación se requiere permisos de ubicación",
-                        Toast.LENGTH_LONG
-                    ).show()
+                }
+                else
+                {
+                    Toast.makeText(this, "Permiso Negado, para utilizar la aplicación se requiere permisos de ubicación", Toast.LENGTH_LONG).show()
                     myRef = database.getReference(PATH_USERS + auth.currentUser!!.uid)
                     myRef.child("available").setValue(false)
                     auth.signOut()
@@ -79,7 +80,8 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         // Inicialización y configuración de la actividad
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -95,16 +97,20 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
         changeService.startListening()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean
+    {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_principal, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
         // Handle item selection
-        return when (item.itemId) {
-            R.id.menuLogOut -> {
+        return when (item.itemId)
+        {
+            R.id.menuLogOut ->
+            {
                 //myRef = database.getReference(PATH_USERS + auth.currentUser!!.uid)
                 myRef.child("available").setValue(false)
                 auth.signOut()
@@ -116,27 +122,25 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
 
                 true
             }
-
-            R.id.menuToggleStatus -> {
+            R.id.menuToggleStatus ->
+            {
                 //myRef = database.getReference(PATH_USERS + auth.currentUser!!.uid)
                 myRef.child("available").get().addOnSuccessListener { availableSnapshot ->
                     val isAvailable = availableSnapshot.getValue(Boolean::class.java) ?: false
                     myRef.child("available").setValue(!isAvailable)
                     val statusText = if (!isAvailable) "disponible" else "no disponible"
-                    Toast.makeText(this, "Ahora te encuentras $statusText", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, "Ahora te encuentras $statusText", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
-
-            R.id.menuAvailableUsers -> {
+            R.id.menuAvailableUsers ->
+            {
                 val intentAvailableUsers = Intent(this, ActiveUsersActivity::class.java)
                 changeService.stopListening()
                 startActivity(intentAvailableUsers)
                 finish()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -166,44 +170,44 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
         mMap!!.setOnMyLocationButtonClickListener(this);
 
         lateinit var jsonString: String
-        try {
+        try
+        {
             jsonString = this.assets.open("locations.json")
                 .bufferedReader()
                 .use { it.readText() }
-        } catch (ioException: IOException) {
+        }
+        catch (ioException: IOException)
+        {
             Log.i("MyApp", ioException.toString())
         }
 
         val listMarkerType = object : TypeToken<List<KeyMarker>>() {}.type
-        val listMarkers: List<KeyMarker> = Gson().fromJson(jsonString, listMarkerType)
-        for (marker in listMarkers) {
+        val listMarkers : List<KeyMarker> = Gson().fromJson(jsonString, listMarkerType)
+        for(marker in listMarkers)
+        {
             val pos = LatLng(marker.latitude!!, marker.longitude!!)
             mMap!!.addMarker(MarkerOptions().position(pos).title(marker.name))
         }
 
 
-        mMap!!.moveCamera(
-            CameraUpdateFactory.newLatLng(
-                LatLng(
-                    listMarkers[0].latitude!!,
-                    listMarkers[0].longitude!!
-                )
-            )
-        )
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(listMarkers[0].latitude!!, listMarkers[0].longitude!!)))
         mMap!!.moveCamera(CameraUpdateFactory.zoomTo(10F))
 
     }
 
 
-    override fun onBackPressed() {
+
+    override fun onBackPressed()
+    {
         // do nothing
     }
 
-    override fun onMyLocationButtonClick(): Boolean {
+    override fun onMyLocationButtonClick(): Boolean
+    {
         location?.let { loc ->
             val pos = LatLng(loc.latitude, loc.longitude)
             mMap!!.addMarker(MarkerOptions().position(pos).title("Mi Ubicación"))
-            myRef = database.getReference(PATH_USERS + auth.currentUser!!.uid)
+            myRef = database.getReference(PATH_USERS+auth.currentUser!!.uid)
             myRef.child("latitude").setValue(loc.latitude)
             myRef.child("longitude").setValue(loc.longitude)
             mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 12f))
@@ -215,19 +219,10 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
         if (users.isEmpty()) {
             Toast.makeText(this, "No hay usuarios disponibles", Toast.LENGTH_SHORT).show()
         } else {
-            // Check if the current user is already online
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            val currentUserUid = currentUser?.uid
-
-            // Iterate through the list of users
-            for (user in users) {
-                // Check if the user is not the current user and is newly available
-                if (user.uid != currentUserUid && user.available) {
-                    // Display a toast indicating that the user is online
-                    val message = "El usuario ${user.name} está en línea"
-                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-                }
-            }
+            // Aquí podrías actualizar la interfaz de usuario para mostrar los usuarios disponibles
+            // Por ejemplo, podrías usar un RecyclerView y un adapter para mostrar la lista de usuarios
         }
     }
+
+
 }

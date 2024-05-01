@@ -101,20 +101,24 @@ class SignUpActivity : AppCompatActivity()
     }
 
     private fun uploadFile(uri: Uri) {
-        val imageRef = storage.reference.child("images/profile/"+ auth.currentUser!!.uid +"/image.jpg")
-        imageRef.putFile(uri)
-            .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
-                override fun onSuccess(taskSnapshot: UploadTask.TaskSnapshot) {
-                    // Get a URL to the uploaded content
-                    Log.i("FBApp", "Successfully uploaded image")
-                }
-            })
-            .addOnFailureListener(object : OnFailureListener {
-                override fun onFailure(exception: Exception) {
-                    // Handle unsuccessful uploads
-                    // ...
-                }
-            })
+        if (uri != Uri.EMPTY) {
+            val imageRef = storage.reference.child("images/profile/"+ auth.currentUser!!.uid +"/image.jpg")
+            imageRef.putFile(uri)
+                .addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
+                    override fun onSuccess(taskSnapshot: UploadTask.TaskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Log.i("FBApp", "Successfully uploaded image")
+                    }
+                })
+                .addOnFailureListener(object : OnFailureListener {
+                    override fun onFailure(exception: Exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                })
+        } else {
+            Log.e(TAG, "URI is empty")
+        }
     }
 
 
