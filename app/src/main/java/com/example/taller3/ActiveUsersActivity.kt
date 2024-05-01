@@ -79,18 +79,18 @@ class ActiveUsersActivity : AppCompatActivity()
     }
 
     private suspend fun downloadImageFromUrl(url: Uri): Bitmap? {
-        return withContext(Dispatchers.IO) {
-            try {
-                val inputStream = URL(url.toString()).openStream()
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                inputStream.close()
-                bitmap
-            } catch (e: IOException) {
-                Log.e(TAG, "Failed to download image from URL $url", e)
-                null
-            }
+    return withContext(Dispatchers.IO) {
+        try {
+            val inputStream = URL(url.toString()).openStream()
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream.close()
+            bitmap
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to download image from URL $url", e)
+            null
         }
     }
+}
 
 
 }

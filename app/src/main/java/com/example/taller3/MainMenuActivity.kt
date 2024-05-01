@@ -206,8 +206,8 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
     {
         location?.let { loc ->
             val pos = LatLng(loc.latitude, loc.longitude)
-            mMap!!.addMarker(MarkerOptions().position(pos).title("Mi Ubicación"))
-            myRef = database.getReference(PATH_USERS+auth.currentUser!!.uid)
+           // mMap!!.addMarker(MarkerOptions().position(pos).title("Mi Ubicación"))
+            //myRef = database.getReference(PATH_USERS+auth.currentUser!!.uid)
             myRef.child("latitude").setValue(loc.latitude)
             myRef.child("longitude").setValue(loc.longitude)
             mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 12f))
