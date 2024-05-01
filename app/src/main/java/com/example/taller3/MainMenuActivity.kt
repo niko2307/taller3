@@ -219,10 +219,22 @@ class MainMenuActivity : AppCompatActivity(), OnMapReadyCallback,
         if (users.isEmpty()) {
             Toast.makeText(this, "No hay usuarios disponibles", Toast.LENGTH_SHORT).show()
         } else {
-            // Aquí podrías actualizar la interfaz de usuario para mostrar los usuarios disponibles
-            // Por ejemplo, podrías usar un RecyclerView y un adapter para mostrar la lista de usuarios
+            // Check if the current user is already online
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val currentUserUid = currentUser?.uid
+
+            // Iterate through the list of users
+            for (user in users) {
+                // Check if the user is not the current user and is newly available
+                if (user.uid != currentUserUid && user.available) {
+                    // Display a toast indicating that the user is online
+                    val message = "El usuario ${user.name} está en línea"
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
+
 
 
 }
