@@ -55,17 +55,23 @@ class ActiveUsersActivity : AppCompatActivity()
                     profilePicsBitmaps.clear()
                     for (userSnapshot in dataSnapshot.children) {
                         val user = userSnapshot.getValue(User::class.java)
-                        if (auth.currentUser != null && user != null && user.available && user.uid != auth.currentUser!!.uid) {
+                        if (auth.currentUser != null && user != null && user.available && user.uid != null && auth.currentUser!!.uid != null && user.uid != auth.currentUser!!.uid) {
                             val imageRef = storage.reference.child("images/profile/${user.uid}/image.jpg")
-                            val bitmap = downloadImageFromUrl(imageRef.downloadUrl.await())
-                            if (bitmap != null) {
-                                withContext(Dispatchers.Main) {
-                                    availableUsers.add(user)
-                                    profilePicsBitmaps.add(bitmap)
-                                    recViewAdapter.notifyDataSetChanged()
+                            try {
+                                val imageUrl = imageRef.downloadUrl.await()
+                                Log.d(TAG, "Download URL for user ${user.uid}: $imageUrl")
+                                val bitmap = downloadImageFromUrl(imageUrl)
+                                if (bitmap != null) {
+                                    withContext(Dispatchers.Main) {
+                                        availableUsers.add(user)
+                                        profilePicsBitmaps.add(bitmap)
+                                        recViewAdapter.notifyDataSetChanged()
+                                    }
+                                } else {
+                                    Log.e(TAG, "Failed to download image for user ${user.uid}")
                                 }
-                            } else {
-                                Log.e(TAG, "Failed to download image for user ${user.uid}")
+                            } catch (e: Exception) {
+                                Log.e(TAG, "Error downloading image for user ${user.uid}", e)
                             }
                         }
                     }
@@ -73,12 +79,16 @@ class ActiveUsersActivity : AppCompatActivity()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                System.out.println("No longer authenticated")
+                Log.e(TAG, "Database operation cancelled", databaseError.toException())
             }
         })
+
+
+
     }
 
     private suspend fun downloadImageFromUrl(url: Uri): Bitmap? {
+
     return withContext(Dispatchers.IO) {
         try {
             val inputStream = URL(url.toString()).openStream()
@@ -88,9 +98,12 @@ class ActiveUsersActivity : AppCompatActivity()
         } catch (e: IOException) {
             Log.e(TAG, "Failed to download image from URL $url", e)
             null
+
         }
     }
 }
+
+
 
 
 }
